@@ -10,25 +10,25 @@ import org.xproce.mediaclient.service.VideoServiceClient;
 import org.xproce.mediaclient.dto.VideoDto;
 
 
-
 @RestController
+@RequestMapping("/videos")
 public class VideoController {
 
     @Autowired
     private VideoServiceClient videoService;
 
-    @PostMapping("addVideo")
+    @PostMapping("/addVideo")
     public VideoDto uploadVideo() {
         Creator creator = Creator.newBuilder()
-                .setName("Xproce")
-                .setEmail("hirchoua.badr@gmail.com")
+                .setName("mariam")
+                .setEmail("https://github.com/StudentMDC")
                 .setId("2")
                 .build();
 
         UploadVideoRequest request = UploadVideoRequest.newBuilder()
-                .setTitle("grpc 101")
-                .setDescription("The gRPC 101 is an introductory course to master Grpc")
-                .setUrl("https://github.com/badrhr/gRPC101")
+                .setTitle("grpc")
+                .setDescription("desc")
+                .setUrl("https://github.com/StudentMDC")
                 .setDurationSeconds(380)
                 .setCreator(creator)
                 .build();
@@ -37,4 +37,10 @@ public class VideoController {
         System.out.println(videoDto);
         return videoDto;
     }
+
+    @GetMapping("/{id}")
+    public VideoDto getVideo(@PathVariable String id) {
+        return videoService.getVideo(id);
+    }
 }
+

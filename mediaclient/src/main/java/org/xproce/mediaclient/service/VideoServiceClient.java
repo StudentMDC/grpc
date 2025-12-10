@@ -5,12 +5,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.xproce.lab.UploadVideoRequest;
 import org.xproce.lab.Video;
+import org.xproce.lab.VideoIdRequest;
 import org.xproce.lab.VideoServiceGrpc;
 import org.xproce.mediaclient.dto.VideoDto;
 import org.xproce.mediaclient.mapper.VideoMapper;
 
 @Service
 public class VideoServiceClient {
+
     @GrpcClient("mediaserver")
     VideoServiceGrpc.VideoServiceBlockingStub stub;
 
@@ -19,7 +21,16 @@ public class VideoServiceClient {
 
     public VideoDto uploadVideo(UploadVideoRequest videoRequest) {
         Video video = stub.uploadVideo(videoRequest);
-        VideoDto videoDto = mapper.fromVideoProtoTovideoDto(video);
+        VideoDto videoDto = mapper.fromVideoProtoToVideoDto(video);
         return videoDto;
     }
+
+    public VideoDto getVideo(String videoId) {
+        VideoIdRequest request = VideoIdRequest.newBuilder()
+                .setId(videoId)
+                .build();
+        Video video = stub.getVideo(request);
+        return mapper.fromVideoProtoToVideoDto(video);
+    }
 }
+
