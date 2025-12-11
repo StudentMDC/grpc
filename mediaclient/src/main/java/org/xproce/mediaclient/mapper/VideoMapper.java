@@ -16,12 +16,6 @@ public class VideoMapper {
 
     private ModelMapper modelMapper = new ModelMapper();
 
-    private void configureModelMapper() {
-        if (modelMapper.getTypeMap(Video.class, VideoDto.class) == null) {
-            modelMapper.createTypeMap(Video.class, VideoDto.class);
-        }
-    }
-
     public VideoDto fromVideoProtoToVideoDto(Video video) {
         VideoDto videoDto = new VideoDto();
 
